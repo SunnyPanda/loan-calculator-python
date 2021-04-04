@@ -55,23 +55,23 @@ def check_input(arguments):
 def calc_principal(periods, payment, interest_rate):
     principal = payment / ((interest_rate * math.pow(1 + interest_rate, periods)) / (math.pow(1 + interest_rate, periods) - 1))
     print(f'Your loan principal = {math.floor(principal)}!')
-    calc_overpayment(periods, payment, math.floor(principal))
+    calc_overpayment(periods * payment, math.floor(principal))
 
 
 def calc_payment(periods, principal, interest_rate):
     payment = principal * interest_rate * math.pow(1 + interest_rate, periods) / (math.pow(1 + interest_rate, periods) - 1)
     print(f'Your annuity payment = {math.ceil(payment)}!')
-    calc_overpayment(periods, math.ceil(payment), principal)
+    calc_overpayment(periods * math.ceil(payment), principal)
 
 
 def calc_periods(principal, payment, interest_rate):
     periods = math.ceil(math.log(payment / (payment - interest_rate * principal), 1 + interest_rate))
     print(output_periods(periods))
-    calc_overpayment(periods, payment, principal)
+    calc_overpayment(periods * payment, principal)
 
 
-def calc_overpayment(periods, payment, principal):
-    print(f'Overpayment = {(periods * payment - principal)}')
+def calc_overpayment(result_payment, principal):
+    print(f'Overpayment = {(result_payment - principal)}')
 
 
 def calc_diff_payment(periods, principal, interest_rate, month):
@@ -102,4 +102,4 @@ if check_input(args):
         acc = 0
         for period in range(0, int(args.periods)):
             acc += calc_diff_payment(int(args.periods), int(args.principal), interest, period + 1)
-        print(f'\nOverpayment = {acc - int(args.principal)}')
+        calc_overpayment(acc, int(args.principal))
