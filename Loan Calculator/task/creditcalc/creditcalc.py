@@ -100,6 +100,6 @@ if check_input(args):
             calc_periods(int(args.principal), int(args.payment), interest)
     else:
         acc = 0
-        for period in range(0, int(args.periods)):
+        for period in range(int(args.periods)):
             acc += calc_diff_payment(int(args.periods), int(args.principal), interest, period + 1)
         calc_overpayment(acc, int(args.principal))
